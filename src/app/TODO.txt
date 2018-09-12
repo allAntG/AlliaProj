@@ -1,0 +1,17 @@
+Sur chargement page faire affichage des éléments non visible.
+Min valeur marche pas sur combien de mois.
+Doit rentrer le titre de la question pour que ça s'affiche sur les radio bt en apparence outline
+Progress bar
+Gap sur bonus-malus
+Bug questionValeur si rien de saisie (voir bonus/malus) --> ajouter un champ valeur défaut
+Sur chargement pas d'affichage des messages d'erreurs (si il y a une saisie) (exemple si une valeur pas bonne est saisie dans bonus/malus)
+Vérifier valeur ok enreg si y'a une valeur par défaut (exemple bonus/malus)
+Min ligne marche pas si pas taille auto sur textarea
+
+Antécédents :
+- au chargement sur première question si oui ou non sélectionné alors "assurance actuelle" n'est pas affiché
+- sur petit écran pas assez d'écard en dessous entre depuis combien de mois et conduite accompagne
+- liste assureur sur "assurance actuelle"
+- Bonus/Malus à 1 par défaut si non assuré sur les 3 dernières années (à modifier si sélectionné non assuré sur 3 dernières années (au changement) ?)
+- Bonus/Malus mettre mat-hint
+- Annulation ou suspension de permis : préciser sur 3 dernières années avec un tooltip

@@ -1,0 +1,76 @@
+<div [formGroup]="form" [ngClass]="groupe.classeCSS">
+  <!-- <label [attr.for]="questionBase.key">{{questionBase.label}}</label> -->
+  <mat-form-field *ngFor="let questionBase of questionsBase" [ngSwitch]="questionBase.controlType"
+      [appearance]="questionBase.appearance" [ngClass]="questionBase.class" [style.display]="questionBase.visible ? '' : 'none'"
+      [hideRequiredMarker]="optForme.hideRequired" [floatLabel]="optForme.floatLabel">
+
+    <mat-label *ngIf="questionBase.title">
+      {{questionBase.title}}
+    </mat-label>
+    
+    <input matInput *ngSwitchCase="'textbox'"
+        [formControlName]="questionBase.key" [id]="questionBase.key" [type]="questionBase.type" [placeholder]="questionBase.label"
+        [required]="questionBase.required" [minlength]="questionBase.minsize" [maxlength]="questionBase.maxsize"
+        [size]="questionBase.size" [min]="questionBase.min" [max]="questionBase.max"
+        (change)="onChangeVal(questionBase)" />
+        <!-- (keyup)="search(searchBox.value, questionBase)" #searchBox /> -->
+    <!-- <ul class="search-result">
+      <li *ngFor="let cv of cpville$ | async" >
+        {{cv.Code_postal}} {{cv.Code_postal}}
+      </li>
+    </ul> -->
+
+    <textarea matInput *ngSwitchCase="'textarea'"
+        [formControlName]="questionBase.key" [id]="questionBase.key" [placeholder]="questionBase.label"
+        [required]="questionBase.required"
+        (change)="onChangeVal(questionBase)">
+    </textarea>
+    <textarea matInput matTextareaAutosize *ngSwitchCase="'textareaautosize'"
+        [formControlName]="questionBase.key" [id]="questionBase.key" [placeholder]="questionBase.label"
+        [required]="questionBase.required" [matAutosizeMinRows]="questionBase.minrows" [matAutosizeMaxRows]="questionBase.maxrows"
+        (change)="onChangeVal(questionBase)">
+    </textarea>
+
+    <mat-select *ngSwitchCase="'dropdown'"
+        [formControlName]="questionBase.key" [id]="questionBase.key" [placeholder]="questionBase.label"
+        [required]="questionBase.required"
+        (selectionChange)="onChangeVal(questionBase)">
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let opt of questionBase.options" [value]="opt.valeur">{{opt.libelle}}</mat-option>
+    </mat-select>
+
+    <section *ngSwitchCase="'radiobt'">
+      <mat-radio-group
+          [formControlName]="questionBase.key" [id]="questionBase.key"
+          [required]="questionBase.required" [ngClass]="questionBase.class" [value]="questionBase.value"
+          (change)="onChangeVal(questionBase)">
+        <mat-radio-button *ngFor="let opt of questionBase.options" [value]="opt.valeur">{{opt.libelle}}</mat-radio-button>
+      </mat-radio-group>
+      <div class="formFld_hidden">
+        <input matInput [formControlName]="questionBase.key" [id]="questionBase.key" type="text" [required]="questionBase.required"
+          (change)="onChangeVal(questionBase)" [value]="questionBase.value" />
+      </div>
+    </section>
+
+    <section *ngSwitchCase="'checkbox'" [ngClass]="questionBase.class">
+      <mat-checkbox *ngFor="let opt of questionBase.options"
+          [formControlName]="questionBase.key" [id]="questionBase.key"
+          [required]="questionBase.required" [value]="opt.valeur"
+          (change)="onChangeVal(questionBase)">
+        {{opt.libelle}}
+      </mat-checkbox>
+      <div class="formFld_hidden">
+        <input matInput [formControlName]="questionBase.key" [id]="questionBase.key" type="text" [required]="questionBase.required"
+          (change)="onChangeVal(questionBase)" [value]="questionBase.value" />
+      </div>
+    </section>   
+
+    <!-- TODO : datepicker -->
+
+    <mat-error>{{getErrorMessage(questionBase)}}</mat-error>
+    <!-- <mat-hint [align]="questionBase.hintAlign">{{questionBase.hint}}</mat-hint> -->
+    <mat-hint>{{getHintMessage(questionBase)}}</mat-hint>
+
+    <!-- <div class="errorMessage" *ngIf="!isValid">{{questionBase.label}} is required</div> -->
+  </mat-form-field>
+</div>

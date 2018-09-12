@@ -1,0 +1,52 @@
+<mat-accordion>
+  <mat-expansion-panel hideToggle="true" [expanded]="step === 0" (opened)="setStep(0)" hideToggle="true">
+    <mat-expansion-panel-header>
+      Antécédents
+    </mat-expansion-panel-header>
+    <form [formGroup]="antecFormGroup">
+      <div class="antecPlusMoins">
+        <mat-label>Plus ou moins de 3 ans d'antécédents :</mat-label>
+        <mat-radio-group formControlName="antecCtrl" required>
+          <mat-radio-button value="Plus">Plus de 3 ans</mat-radio-button>
+          <mat-radio-button value="Moins">Moins de 3 ans</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Ancien assureur</mat-label>
+          <input formControlName="ancienAssuCtrl" matInput placeholder="Nom de l'assureur" required>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Ancienneté</mat-label>
+          <input formControlName="ancienAssuTmpCtrl" type="number" matInput placeholder="Depuis combien de temps" required>
+          <mat-hint>En années</mat-hint>
+        </mat-form-field>
+      </div>
+    </form>
+    <mat-action-row>
+      <button mat-button (click)="nextStep()">Suivant</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel hideToggle="true" [expanded]="step === 1" (opened)="setStep(1)">
+    <mat-expansion-panel-header>
+      Sinistres
+    </mat-expansion-panel-header>
+
+    <mat-action-row>
+      <button mat-button (click)="prevStep()">Précédent</button>
+      <button mat-button (click)="nextStep()">Suivant</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel hideToggle="true" [expanded]="step === 2" (opened)="setStep(2)">
+    <mat-expansion-panel-header>
+      Résiliations
+    </mat-expansion-panel-header>
+
+    <mat-action-row>
+      <button mat-button (click)="prevStep()">Précédent</button>
+      <button mat-button>Continuer</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>

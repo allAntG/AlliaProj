@@ -1,0 +1,36 @@
+mat-card-content > p > mat-card { margin-bottom: 9px; }
+
+.expPanAccord .mat-expansion-panel-header-title, 
+.expPanAccord .mat-expansion-panel-header-description {
+    flex-basis: 0;
+}
+
+.expPanAccord .mat-expansion-panel-header-description {
+    justify-content: space-between;
+    align-items: center;
+}
+
+mat-card-actions {
+    margin-right: 7px;
+}
+
+mat-card.card-soustheme {
+    div {
+        margin-top: 16px;
+    }
+}
+
+
+.contPasQuest {
+    margin-top: 42px;
+    margin-left: 23px;
+
+    h1 {
+        margin-bottom: 26px;    
+        padding-bottom: 7px; 
+    }
+}
+
+mat-card.card-theme {
+    margin-top: 5px;
+}

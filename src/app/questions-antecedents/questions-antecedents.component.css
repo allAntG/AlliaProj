@@ -1,0 +1,9 @@
+.antecPlusMoins {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 19px;
+}
+
+.antecPlusMoins mat-radio-group {
+    margin-top: 8px;
+}

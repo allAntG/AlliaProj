@@ -1,0 +1,40 @@
+<!-- <div [formGroup]="form">
+  <label [attr.for]="questionBase.key">{{questionBase.label}}</label>
+
+  <div [ngSwitch]="questionBase.controlType">
+    <input *ngSwitchCase="'textbox'" [formControlName]="questionBase.key" [id]="questionBase.key" [type]="questionBase.type">
+
+    <select [id]="questionBase.key" *ngSwitchCase="'dropdown'" [formControlName]="questionBase.key">
+      <option *ngFor="let opt of questionBase.options" [value]="opt.key">{{opt.value}}</option>
+    </select>
+  </div>
+
+  <div class="errorMessage" *ngIf="!isValid">{{questionBase.label}} is required</div>
+</div> -->
+
+<!-- <mat-form-field>
+  <input class="form-control" matInput focused placeholder="{{questions[0].questionLib}}" (keyup.enter)="inptQuestionPrenom.focus()"
+    formControlName="nomCtrl" (change)="onChangeVal(0, firstFormGroup.get('nomCtrl').value)" autofocus required>
+  <mat-error *ngIf="firstFormGroup.get('nomCtrl').status === 'INVALID'">{{questions[0].libMesErr}}</mat-error>
+</mat-form-field>
+<mat-form-field>
+  <input #inptQuestionPrenom matInput placeholder="{{questions[1].questionLib}}" (keyup.enter)="stepper.next()" formControlName="prenomCtrl"
+    (change)="onChangeVal(1, firstFormGroup.get('prenomCtrl').value)" required>
+  <mat-error *ngIf="firstFormGroup.get('prenomCtrl').status === 'INVALID'">{{questions[1].libMesErr}}</mat-error>
+</mat-form-field> -->
+
+<div [formGroup]="form">
+  <!-- <label [attr.for]="questionBase.key">{{questionBase.label}}</label> -->
+  <mat-form-field [ngSwitch]="questionBase.controlType">
+    <input matInput *ngSwitchCase="'textbox'" [formControlName]="questionBase.key" [id]="questionBase.key" [type]="questionBase.type"
+      [placeholder]="questionBase.label" [required]="questionBase.required"/>
+
+    <mat-select [id]="questionBase.key" *ngSwitchCase="'dropdown'" [formControlName]="questionBase.key" [placeholder]="questionBase.label" [required]="questionBase.required">
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let opt of questionBase.options" [value]="opt.valeur">{{opt.libelle}}</mat-option>
+    </mat-select>
+
+    <mat-error>{{(form.get(questionBase.key).status === 'INVALID') ? questionBase.messErreur : ''}}</mat-error>
+    <!-- <div class="errorMessage" *ngIf="!isValid">{{questionBase.label}} is required</div> -->
+  </mat-form-field>
+</div>

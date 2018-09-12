@@ -1,0 +1,73 @@
+<!-- <mat-accordion class="expPanAccord" *ngIf="themesQuest.length">
+  <mat-expansion-panel *ngFor="let theme of themesQuest" [expanded]="step === theme.numero" (opened)="setStep(theme.numero)" [disabled]="theme.disabled" hideToggle="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{theme.titre}}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{theme.description}}&nbsp;
+        <mat-icon>{{theme.icone}}</mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <app-questionnaire-question [numeroTheme]="theme.numero"></app-questionnaire-question>
+
+    <mat-action-row>
+      <button *ngIf="theme.numero !== 0" mat-button color="warn" (click)="prevStep()">Précédent</button>
+      <button *ngIf="theme.numero !== themesQuest.length-1" mat-button color="primary" (click)="nextStep()" [disabled]="!theme.valide" 
+                matTooltip="Champs obligatoires non saisis" matTooltipPosition="before" [matTooltipDisabled]="theme.valide || theme.numero !== 0" matTooltipShowDelay="2000" matTooltipHideDelay="2000" matTooltipTouchendHideDelay="1000">
+        Suivant
+      </button>
+      <button *ngIf="theme.numero === themesQuest.length-1" mat-button color="primary" (click)="validQuest()" [disabled]="!theme.valide">Valider</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion> -->
+
+<mat-horizontal-stepper [selectedIndex]="step" (selectionChange)="stepChange($event)" linear="true" #stepper>
+  <mat-step *ngFor="let theme of themesQuest; let i = index" [stepControl]="theme.formTheme">
+    <form [formGroup]="theme.formTheme">
+      <ng-template matStepLabel>{{theme.themeQuestionnaire.titre}}</ng-template>
+      <mat-card *ngIf="theme" class="card-theme">
+        <mat-card-header>
+          <div mat-card-avatar>
+            <mat-icon class=".material-icons md-36">{{theme.themeQuestionnaire.icone}}</mat-icon>
+          </div>
+          <mat-card-title>{{theme.themeQuestionnaire.titre}}</mat-card-title>
+          <mat-card-subtitle>{{theme.themeQuestionnaire.description}}&nbsp;</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            <mat-card class="card-soustheme" *ngFor="let sousTheme of theme.sousThemeQuestionnaire">
+              {{sousTheme.sousThemeLib}}
+              <div [ngClass]="sousTheme.classeCSS">
+                <app-questions-form-groupe [ngClass]="groupe.classeCSS" *ngFor="let groupe of getGroupesSousTheme(theme.themeQuestionnaire.numero, sousTheme.numSousTheme)" [groupe]="groupe" [form]="theme.formTheme"></app-questions-form-groupe>
+              </div>
+            </mat-card>
+          </p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button *ngIf="i > 0" mat-button color="accent" matStepperPrevious>Précédent</button>
+          <button *ngIf="i < nbThemes - 1" mat-raised-button color="accent" matStepperNext>Suivant</button>
+
+          <!-- <button mat-button *ngIf="theme.numero !== 0" mat-button color="warn" (click)="prevStep()">Précédent</button>
+        <button mat-button *ngIf="theme.numero !== themesQuest.length-1" mat-button color="primary" (click)="nextStep()" [disabled]="!theme.valide"
+            matTooltip="Champs obligatoires non saisis" matTooltipPosition="before" [matTooltipDisabled]="theme.valide || theme.numero !== 0"
+            matTooltipShowDelay="2000" matTooltipHideDelay="2000" matTooltipTouchendHideDelay="1000">
+          Suivant
+        </button>
+        <button mat-button *ngIf="theme.numero === themesQuest.length-1" mat-button color="primary" (click)="validQuest()" [disabled]="!theme.valide">Valider</button> -->
+        </mat-card-actions>
+        <mat-card-footer>
+
+        </mat-card-footer>
+      </mat-card>
+    </form>
+  </mat-step>
+</mat-horizontal-stepper>
+
+<div *ngIf="!themeQuestSel" class="contPasQuest">
+  <h1 color="primary">
+    Fin du questionnaire !
+  </h1>
+  <button mat-raised-button color="primary" (click)="retourQuest()">Retour</button>
+</div>

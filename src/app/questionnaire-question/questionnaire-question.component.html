@@ -1,0 +1,238 @@
+<!-- <app-questions-conducteur *ngIf="numeroTheme === 0"></app-questions-conducteur>
+<app-questions-antecedents *ngIf="numeroTheme === 1"></app-questions-antecedents>
+<app-questions-vehicule *ngIf="numeroTheme === 2"></app-questions-vehicule>
+<app-questions-garanties *ngIf="numeroTheme === 3"></app-questions-garanties>
+<app-questions-options *ngIf="numeroTheme === 4"></app-questions-options>
+<app-questions-clauses *ngIf="numeroTheme === 5"></app-questions-clauses> -->
+
+<!-- <div *ngFor="let question of questions" class="form-row">
+  <app-question [question]="question" [form]="form"></app-question>
+</div> -->
+
+<!-- <div>
+    <form (ngSubmit)="onSubmit()" [formGroup]="form">
+      <div *ngFor="let questionBase of questionsBase" class="form-row">
+        <app-questions-form [questionBase]="questionBase" [form]="form"></app-questions-form>
+      </div>
+   
+      <div class="form-row">
+        <button type="submit" [disabled]="!form.valid">Save</button>
+      </div>
+    </form>
+   
+    <div *ngIf="payLoad" class="form-row">
+      <strong>Saved the following values</strong><br>{{payLoad}}
+    </div>
+  </div> -->
+
+
+<div *ngIf="isModeQuest">
+  <div *ngFor="let etape of etapesQuestions; let i = index">
+    <form (ngSubmit)="onSubmit()" [formGroup]="etape.formGroup">
+      <div [ngClass]="etape.etape.classeCSS">
+        <app-questions-form-groupe [ngClass]="groupe.classeCSS" *ngFor="let groupe of etape.groupes" [groupe]="groupe" [form]="etape.formGroup"></app-questions-form-groupe>
+      </div>
+
+      <div>
+        <button mat-button type="submit" [disabled]="!etape.formGroup.valid">Save</button>
+      </div>
+    </form>
+
+    <div *ngIf="payLoad">
+      <strong>Saved the following values</strong>
+      <br>{{payLoad}}
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!isModeQuest">
+  <mat-horizontal-stepper linear="true" #stepper="matHorizontalStepper">
+    <!-- <app-questions-form-etape *ngFor="let etape of etapes" [etape]="etape" [form]="form"></app-questions-form-etape> -->
+    <mat-step *ngFor="let etape of etapesQuestions; let i = index" [stepControl]="etape.formGroup">
+      <form (ngSubmit)="onSubmitStep(etape.formGroup)" [formGroup]="etape.formGroup">
+        <ng-template matStepLabel>{{etape.etape.sousThemeEtapeLib}}</ng-template>
+        <!-- <div *ngFor="let groupe of groupes"> -->
+        <div [ngClass]="etape.etape.classeCSS">
+          <app-questions-form-groupe [ngClass]="groupe.classeCSS" *ngFor="let groupe of etape.groupes" [groupe]="groupe" [form]="etape.formGroup"></app-questions-form-groupe>
+        </div>
+        <!-- </div> -->
+
+        <div>
+          <button *ngIf="i > 0" mat-button matStepperPrevious>Précédent</button>
+          <button mat-button matStepperNext color="primary" type="submit">Suivant</button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>
+
+
+<!-- <mat-horizontal-stepper linear="true" #stepper="matHorizontalStepper">
+            <mat-step [stepControl]="firstFormGroup">
+              <form [formGroup]="firstFormGroup">
+                <ng-template matStepLabel>Nom et prénom</ng-template>
+                <mat-form-field>
+                  <input class="form-control" matInput focused placeholder="{{questions[0].questionLib}}" (keyup.enter)="inptQuestionPrenom.focus()"
+                    formControlName="nomCtrl" (change)="onChangeVal(0, firstFormGroup.get('nomCtrl').value)" autofocus required>
+                  <mat-error *ngIf="firstFormGroup.get('nomCtrl').status === 'INVALID'">{{questions[0].libMesErr}}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                  <input #inptQuestionPrenom matInput placeholder="{{questions[1].questionLib}}" (keyup.enter)="stepper.next()" formControlName="prenomCtrl"
+                    (change)="onChangeVal(1, firstFormGroup.get('prenomCtrl').value)" required>
+                  <mat-error *ngIf="firstFormGroup.get('prenomCtrl').status === 'INVALID'">{{questions[1].libMesErr}}</mat-error>
+                </mat-form-field>
+                <span matTooltip="Vous devez saisir le nom et le prénom avant de continuer" matTooltipPosition="after" [matTooltipDisabled]="isValidFormNomPrenom"
+                  #tooltipNP="matTooltip"></span>
+                <div>
+                  <button mat-button matStepperNext (click)="tooltipNP.show()">Suivant</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup">
+              <form [formGroup]="secondFormGroup">
+                <ng-template matStepLabel>Date de naissance</ng-template> -->
+<!-- <mat-form-field>
+                    <input #sQuestionDateNaiss matInput type="date" placeholder="{{questions[2].questionLib}}" (keyup.enter)="stepper.next()" formControlName="secondCtrl" (change)="onChangeVal(2, sQuestionDateNaiss.value)" required>
+                  </mat-form-field> -->
+<!--    <mat-form-field>
+                  <input #sQuestionDateNaiss matInput [matDatepicker]="picker" placeholder="{{questions[2].questionLib}}" (keyup.enter)="stepper.next()"
+                    formControlName="secondCtrl" (change)="onChangeVal(2, sQuestionDateNaiss.value)" required>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+      
+                <div>
+                  <button mat-button matStepperPrevious>Précédent</button>
+                  <button mat-button matStepperNext>Suivant</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="thirdFormGroup">
+              <form [formGroup]="thirdFormGroup">
+                <ng-template matStepLabel>Permis</ng-template>
+                <mat-form-field>
+                  <input #sQuestionDatePermis matInput type="date" placeholder="{{questions[3].questionLib}}" (keyup.enter)="stepper.next()"
+                    formControlName="thirdCtrl" (change)="onChangeVal(3, sQuestionDatePermis.value)" required>
+                </mat-form-field>
+                <div>
+                  <button mat-button matStepperPrevious>Précédent</button>
+                  <button mat-button matStepperNext>Suivant</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="fourthFormGroup">
+              <form [formGroup]="fourthFormGroup">
+                <ng-template matStepLabel>Profession</ng-template>
+                <mat-form-field>
+                  <mat-select #sQuestionProfession placeholder="{{questions[4].questionLib}}" formControlName="professCtrl" (selectionChange)="onChangeVal(4, sQuestionProfession.value)"
+                    required>
+                    <mat-option>--</mat-option>
+                    <mat-option *ngFor="let val of questions[4].valeurListe" value="{{val.valeur}}">{{val.libelle}}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="fourthFormGroup.get('professCtrl').status === 'INVALID'">{{questions[4].libMesErr}}</mat-error>
+                </mat-form-field>
+      
+                <mat-form-field *ngIf="affAutreProfession">
+                  <input matInput placeholder="{{questions[5].questionLib}}" (keyup.enter)="stepper.next()" formControlName="professAutreCtrl"
+                    (change)="onChangeVal(5, fourthFormGroup.get('professAutreCtrl').value)">
+                  <mat-error *ngIf="fourthFormGroup.get('professAutreCtrl').status === 'INVALID'">{{questions[5].libMesErr}}</mat-error>
+                </mat-form-field>
+                <div>
+                  <button mat-button matStepperPrevious>Précédent</button>
+                  <button mat-button matStepperNext>Suivant</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step>
+              <ng-template matStepLabel>Fin</ng-template>
+              Questions complétées
+              <div>
+                <button mat-button matStepperPrevious>Retour</button>-->
+<!-- <button mat-button (click)="stepper.reset()">Annuler</button>
+                  <button mat-button (click)="validStep()">Valider</button> -->
+<!-- <button mat-button color="accent" (click)="inptQuestionAdresse.focus()">Continuer</button>
+              </div>
+            </mat-step>
+          </mat-horizontal-stepper>
+       
+
+          <mat-horizontal-stepper linear="true" #stepperCoord="matHorizontalStepper">
+            <mat-step [stepControl]="adresseFormGroup">
+              <form [formGroup]="adresseFormGroup">
+                <ng-template matStepLabel>Votre adresse</ng-template>
+                <div class="formFld_largeurTot flex flexCol">
+                  <div>
+                    <mat-form-field appearance="standard" class="formFld_largeurTot">
+                      <mat-label>Votre adresse</mat-label>
+                      <textarea #inptQuestionAdresse matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5" matInput placeholder="{{questions[6].questionLib}}"
+                        formControlName="adresseCtrl" (change)="onChangeVal(6, adresseFormGroup.get('adresseCtrl').value)" required></textarea>
+                    </mat-form-field>
+                  </div>
+                  <div class="formFld_largeurTot flex">
+                    <mat-form-field appearance="standard" class="inptQuestionAdrCp">
+                      <mat-label>Code postal</mat-label>
+                      <input #inptQuestionAdrCp matInput placeholder="{{questions[7].questionLib}}" maxlength="5" (keyup.enter)="inptQuestionAdrVille.focus()"
+                        formControlName="adresseCpCtrl" (change)="onChangeVal(7, adresseFormGroup.get('adresseCpCtrl').value)" required>
+                      <mat-hint align="end">{{inptQuestionAdrCp.value.length}} / 5</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field appearance="standard" class="inptQuestionAdrVille">
+                      <mat-label>Ville</mat-label>
+                      <input #inptQuestionAdrVille matInput placeholder="{{questions[8].questionLib}}" formControlName="adresseVilleCtrl" (change)="onChangeVal(8, adresseFormGroup.get('adresseVilleCtrl').value)"
+                        required>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div>
+                  <button mat-button matStepperNext>Suivant</button>
+                </div>
+              </form>
+            </mat-step>
+            <mat-step [stepControl]="mailtelFormGroup">
+              <form [formGroup]="mailtelFormGroup">
+                <ng-template matStepLabel>E-Mail et téléphone</ng-template>
+                <mat-form-field>
+                  <input matInput type="email" placeholder="{{questions[9].questionLib}}" formControlName="adrEMailCtrl" [errorStateMatcher]="matcher"
+                    (keyup.enter)="inptQuestionTel.focus()" (change)="onChangeVal(9, mailtelFormGroup.get('adrEMailCtrl').value)"
+                    required>
+                  <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                    Veuillez entrer une adresse e-mail valide
+                  </mat-error>
+                  <mat-error *ngIf="emailFormControl.hasError('required')">
+                    L'adresse E-Mail est
+                    <strong>obligatoire</strong>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                  <input #inptQuestionTel type="tel" matInput placeholder="{{questions[10].questionLib}}" formControlName="telephoneCtrl" (change)="onChangeVal(10, mailtelFormGroup.get('telephoneCtrl').value)"
+                    required>
+                </mat-form-field>
+                <div>
+                  <button mat-button matStepperPrevious>Précédent</button>
+                  <button mat-button color="accent">Continuer</button>
+                </div>
+              </form>
+            </mat-step>
+          </mat-horizontal-stepper> -->
+
+
+<!-- 
+      
+      <mat-card>
+        <mat-card-title>Informations sur le conducteur</mat-card-title>
+      
+        <mat-card-content>
+          
+        </mat-card-content>
+      </mat-card>
+      
+      <mat-card>
+        <mat-card-title>Coordonnées</mat-card-title>
+      
+        <mat-card-content>
+          <p>
+            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+            bred for hunting.
+          </p>
+        </mat-card-content>
+      </mat-card> -->

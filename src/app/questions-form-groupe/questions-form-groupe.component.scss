@@ -1,0 +1,22 @@
+$width-adrcp: 130px;
+
+.inptQuestionAdrCp {
+    width: $width-adrcp;
+}
+.inptQuestionAdrVille {
+    flex: 1;
+    min-width: 170px;
+    width: calc(100% - 130px - 18px - 2px);
+}
+
+.inptQuestionEMail { 
+    min-width: 242px;
+    max-width: 242px; 
+
+    @media screen and (max-width: 400px) {
+        min-width: 170px;
+    }  
+}
+.inptQuestionTelephone { width: 170px; }
+
+.inptQuestionMotifResilia { width: 320px; }
